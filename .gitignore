@@ -41,3 +41,35 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+*.exe
+
+BooksScraper/bin/Debug/BooksScraper.exe.config
+
+BooksScraper/bin/Debug/BooksScraper.pdb
+
+BooksScraper/bin/Debug/BooksScraper.vshost.exe.config
+
+BooksScraper/bin/Debug/BooksScraper.vshost.exe.manifest
+
+BooksScraper/obj/Debug/BooksScraper.csproj.FileListAbsolute.txt
+
+BooksScraper/obj/Debug/BooksScraper.csprojResolveAssemblyReference.cache
+
+BooksScraper/obj/Debug/BooksScraper.Properties.Resources.resources
+
+BooksScraper/obj/Debug/DesignTimeResolveAssemblyReferences.cache
+
+BooksScraper/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+
+BooksScraper/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+
+BooksScraper/obj/Debug/BooksScraper.Form1.resources
+
+BooksScraper/obj/Debug/BooksScraper.pdb
+
+BooksScraper/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+
+BooksScraper/obj/Debug/BooksScraper.csproj.GenerateResource.Cache
+
+BooksScraper/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs

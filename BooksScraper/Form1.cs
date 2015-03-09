@@ -24,35 +24,49 @@ namespace BooksScraper
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            String[] pageUrls = richTextBox1.Lines;
             int scrapeCount = 0;
 
-            ArrayList bookUrls = new ArrayList();
-            HttpSession session = new HttpSession();
-            session.setUserAgent();
-            session.getPage("http://www.barnesandnoble.com/s/?pro=1886&startat=&store=book&view=grid");
-
-            string pattern = "<a href=\"(.*?)\"  hidefocus=\"true\"";
-            MatchCollection matches = Regex.Matches(session.html, pattern);
-            if (matches.Count > 0)
-                foreach (Match m in matches)
-                    bookUrls.Add( m.Groups[1].ToString() );
-
-            foreach (String url in bookUrls)
+            for (int i = 0; i < pageUrls.Length; i++)
             {
-                session.getPage(url);
-                String category = textBox1.Text;
-                String isbn = session.extractFromHtml("ISBN-13:</span> ", "\n                        </li>\n                    \n                                <li>", 16);
-                String title = session.extractFromHtml("'product title' : '", "',\n'store", 19).Replace("\\", "");
-                String price = session.extractFromHtml("'unit price' : '$", "'\n});\n}\n", 17);
-                String author = session.extractFromHtml("Contributor_1\" class=\"subtle\">", "</a>\n            </li>\n        \n     </ul>", 30);
-                Random random = new Random();
-                String year = random.Next(1995, 2015).ToString();
-                String inventory = random.Next(300, 2500).ToString();
-                String imageUrl = session.extractFromHtml("data-bn-src-url=\"", "\">\n                        </li>", 17);
-                Image coverPicture = getImage(imageUrl, isbn);
-                saveToTextFile("BookData", isbn + "|" + title + "|" + inventory + "|" + price + "|" + category + "|" + author + "|" + year);
-                scrapeCount++;
-                label1.Text = scrapeCount.ToString();
+                    ArrayList bookUrls = new ArrayList();
+                    HttpSession session = new HttpSession();
+                    session.setUserAgent();
+                    try
+                    {
+                        session.getPage(pageUrls[i]);
+                    }
+                    catch { };
+
+                    string pattern = "<a href=\"(.*?)\"  hidefocus=\"true\"";
+                    MatchCollection matches = Regex.Matches(session.html, pattern);
+                    if (matches.Count > 0)
+                        foreach (Match m in matches)
+                            bookUrls.Add(m.Groups[1].ToString());
+
+                    foreach (String url in bookUrls)
+                    {
+                        try
+                        {
+                            session.getPage(url);
+                            String category = textBox1.Text;
+                            String isbn = session.extractFromHtml("ISBN-13:</span> ", "\n                        </li>\n                    \n                                <li>", 16);
+                            String title = session.extractFromHtml("'product title' : '", "',\n'store", 19).Replace("\\", "");
+                            String price = session.extractFromHtml("'unit price' : '$", "'\n});\n}\n", 17);
+                            String author = session.extractFromHtml("by ", " | ", 3);
+                            Random random = new Random();
+                            String year = random.Next(1995, 2015).ToString();
+                            String inventory = random.Next(300, 2500).ToString();
+                            String imageUrl = session.extractFromHtml("data-bn-src-url=\"", "\">\n                        </li>", 17);
+                            Image coverPicture = getImage(imageUrl, isbn);
+                            saveToTextFile("BookData", isbn + "|" + title + "|" + inventory + "|" + price + "|" + category + "|" + author + "|" + year);
+                            scrapeCount++;
+                            label1.Text = scrapeCount.ToString();
+                            Application.DoEvents();
+                        }
+                        catch { }
+                    }
             }
         }
 
